@@ -1,0 +1,36 @@
+{
+    "name": "Yet Another Chatwork Emoticons Plus",
+    "version": "0.1.0",
+    "manifest_version": 2,
+    "description": "More Emoticons for Chatwork.",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.chatwork.com/*",
+                "https://kcw.kddi.ne.jp/*"
+            ],
+            "js": [
+                "js/jquery-2.1.1.min.js",
+                "js/emo.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": ["emo.js"],
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "webRequest",
+        "webRequestBlocking",
+        "unlimitedStorage"
+    ],
+    "options_page": "option.html",
+    "icons": {
+        "48": "icon.png"
+    },
+    "update_url": "http://cwep.thangtd.com/update-xml/updates.xml",
+    "homepage_url": "http://cwep.thangtd.com"
+}
