@@ -1,6 +1,7 @@
 {
     "name": "Yet Another Chatwork Emoticons Plus",
-    "version": "0.1.0",
+    "short_name": "YACEP",
+    "version": "0.3.4",
     "manifest_version": 2,
     "description": "More Emoticons for Chatwork.",
     "content_scripts": [
@@ -11,26 +12,27 @@
             ],
             "js": [
                 "js/jquery-2.1.1.min.js",
+                "js/contentscript.js",
                 "js/emo.js"
             ],
             "run_at": "document_end"
         }
     ],
-    "web_accessible_resources": ["emo.js"],
+    "web_accessible_resources": ["js/emo.js"],
     "browser_action": {
-        "default_icon": "icon.png",
+        "default_icon": "icon48.png",
         "default_popup": "popup.html"
     },
     "permissions": [
+        "storage",
         "tabs",
-        "webRequest",
-        "webRequestBlocking",
-        "unlimitedStorage"
+        "http://*/"
     ],
     "options_page": "option.html",
     "icons": {
-        "48": "icon.png"
+        "48": "icon48.png",
+        "64": "icon64.png",
+        "128": "icon128.png"
     },
-    "update_url": "http://cwep.thangtd.com/update-xml/updates.xml",
-    "homepage_url": "http://cwep.thangtd.com"
+    "homepage_url": "http://yacep.thangtd.com"
 }
