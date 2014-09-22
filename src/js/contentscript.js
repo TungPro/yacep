@@ -3,7 +3,7 @@ var LOCAL_STORAGE_DATA_KEY = "YACEP_EMO_DATA";
 
 var CHROME_SYNC_KEY = "YACEP_CHROME_SYNC_DATA";
 
-var DEFAULT_DATA_URL = "http://yacep.thangtd.com/data/default.json";
+var DEFAULT_DATA_URL = "https://dl.dropboxusercontent.com/s/ik69cu3wnya6i0d/default.json?dl=1";
 
 
 chrome.storage.sync.get(CHROME_SYNC_KEY, function(info) {

@@ -1,7 +1,7 @@
 {
     "name": "Yet Another Chatwork Emoticons Plus",
     "short_name": "YACEP",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "manifest_version": 2,
     "description": "More Emoticons for Chatwork.",
     "content_scripts": [

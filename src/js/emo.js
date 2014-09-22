@@ -36,7 +36,7 @@ function addEmo(emo) {
 }
 
 function getEmoUrl(img) {
-    if (img.indexOf('https://') != 0 || img.indexOf('http://') != 0) {
+    if (img.indexOf('https://') == 0 || img.indexOf('http://') == 0) {
         return img;
     }
     return DEFAULT_IMG_HOST + "img/emoticons/" + img;
