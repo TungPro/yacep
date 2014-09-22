@@ -22,14 +22,12 @@ $(function(){
 
 
 function addEmo(emo) {
-    CW.prepareRegExp();
     for (var index = 0; index < emo.length; index++) {
         var encoded_text = htmlEncode(emo[index].key);
         var img_src = getEmoUrl(emo[index].src);
         CW.reg_cmp.push({
             key: new RegExp(emo[index].regex, 'g'),
-            rep: '<img src="' + img_src + '" title="' + encoded_text + '" alt="' +
-                encoded_text + '" class="ui_emoticon"/>',
+            rep: '<img src="' + img_src + '" class="ui_emoticon"/>',
             reptxt: emo[index].key
         });
     }
