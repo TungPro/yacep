@@ -29,6 +29,9 @@ function getData(url, info) {
                 console.log("You are using Yacep!" + ". Data Name: " + data.data_name + ". Data Version: "
                 + data.data_version);
                 localStorage[LOCAL_STORAGE_DATA_KEY] = JSON.stringify(data.emoticons);
+                if (typeof info == "undefined") {
+                	info = {};
+                }
                 info.data_name = data.data_name;
                 info.data_version = data.data_version;
                 info.date_sync = (new Date).toLocaleString();
