@@ -30,7 +30,7 @@ function getData(url, info) {
                 + data.data_version);
                 localStorage[LOCAL_STORAGE_DATA_KEY] = JSON.stringify(data.emoticons);
                 if (typeof info == "undefined") {
-                	info = {};
+                    info = {};
                 }
                 info.data_name = data.data_name;
                 info.data_version = data.data_version;

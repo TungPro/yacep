@@ -8,16 +8,19 @@ function htmlEncode(value){
 var timer;
 
 $(function(){
-    timer = setInterval(
-        function(){
-            if (typeof CW != 'undefined' && typeof CW.reg_cmp != 'undefined') {
-                var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
-                addEmo(emodata);
-                window.clearInterval(timer);
-            }
-        },
-        100
-    );
+    CW.prepareRegExp();
+    var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
+    addEmo(emodata);
+    //timer = setInterval(
+    //    function(){
+    //        if (typeof CW != 'undefined' && typeof CW.reg_cmp != 'undefined') {
+    //            var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
+    //            addEmo(emodata);
+    //            window.clearInterval(timer);
+    //        }
+    //    },
+    //    100
+    //);
 });
 
 
