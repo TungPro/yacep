@@ -8,6 +8,10 @@ $(function() {
         chrome.tabs.create({url:chrome.extension.getURL(app_detail.options_page)});
     });
 
+    $('#homepage').click(function(){
+        chrome.tabs.create({url: $(this).attr('href')});
+    });
+
     chrome.storage.sync.get(CHROME_SYNC_KEY, function(data) {
         data = data[CHROME_SYNC_KEY];
         if (!$.isEmptyObject(data)) {
