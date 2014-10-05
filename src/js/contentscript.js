@@ -18,7 +18,11 @@ chrome.storage.sync.get(CHROME_SYNC_KEY, function(info) {
         console.log("No information from Chrome Storage. Using default Version");
         url = DEFAULT_DATA_URL;
     }
-    getData(url, info);
+    if (info.ext_status == false) {
+        console.log("YACEP is disabled!");
+    } else {
+        getData(url, info);
+    }
 });
 
 function getData(url, info) {
