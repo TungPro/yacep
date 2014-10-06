@@ -1,6 +1,8 @@
 // Const
 var LOCAL_STORAGE_DATA_KEY = "YACEP_EMO_DATA";
 var DEFAULT_IMG_HOST = "http://yacep.thangtd.com/";
+var CODE_TYPE_OFFENSIVE = "OFFENSIVE";
+var CODE_TYPE_DEFENSIVE = "DEFENSIVE";
 
 function htmlEncode(value){
 	return $('<div/>').text(value).html();
@@ -8,19 +10,23 @@ function htmlEncode(value){
 var timer;
 
 $(function(){
-    CW.prepareRegExp();
-    var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
-    addEmo(emodata);
-    //timer = setInterval(
-    //    function(){
-    //        if (typeof CW != 'undefined' && typeof CW.reg_cmp != 'undefined') {
-    //            var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
-    //            addEmo(emodata);
-    //            window.clearInterval(timer);
-    //        }
-    //    },
-    //    100
-    //);
+    code_type = localStorage['code_type'];
+    if (code_type == CODE_TYPE_DEFENSIVE) {
+        timer = setInterval(
+            function(){
+                if (typeof CW != 'undefined' && typeof CW.reg_cmp != 'undefined') {
+                    var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
+                    addEmo(emodata);
+                    window.clearInterval(timer);
+                }
+            },
+            100
+        );
+    } else {
+        CW.prepareRegExp();
+        var emodata = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
+        addEmo(emodata);
+    }
 });
 
 

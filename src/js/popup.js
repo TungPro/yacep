@@ -1,5 +1,9 @@
 var CHROME_SYNC_KEY = "YACEP_CHROME_SYNC_DATA";
+var CHROME_LOCAL_KEY = "YACEP_CHROME_LOCAL_DATA";
+var CODE_TYPE_OFFENSIVE = "OFFENSIVE";
+var CODE_TYPE_DEFENSIVE = "DEFENSIVE";
 var stored_data = {};
+var local_stored_data = {};
 
 $(function() {
     var app_detail = chrome.app.getDetails();
@@ -17,6 +21,10 @@ $(function() {
         switchStatus();
     });
 
+    $('#btn-code-type').click(function() {
+        switchCodeType();
+    });
+
     chrome.storage.sync.get(CHROME_SYNC_KEY, function(data) {
         stored_data = data;
         data = data[CHROME_SYNC_KEY];
@@ -26,6 +34,16 @@ $(function() {
             $('#date-sync-info').html(data.date_sync);
             loadStatus(data.ext_status);
         }
+    });
+
+    chrome.storage.local.get(CHROME_LOCAL_KEY, function(data) {
+        local_stored_data = data;
+        data = data[CHROME_LOCAL_KEY];
+        var type = CODE_TYPE_OFFENSIVE;
+        if (!$.isEmptyObject(data)) {
+            type = data.code_type;
+        }
+        loadCodeType(type);
     });
 });
 
@@ -39,6 +57,14 @@ function loadStatus(status) {
     }
 }
 
+function loadCodeType(type) {
+    if (type == CODE_TYPE_DEFENSIVE) {
+        $('#code-type').removeClass().addClass('text-danger').html('DEFENSIVE');
+    } else {
+        $('#code-type').removeClass().addClass('text-primary').html('OFFENSIVE');
+    }
+}
+
 function switchStatus() {
     var status = true;
     if ($('#status').html() == 'ENABLED') {
@@ -47,5 +73,19 @@ function switchStatus() {
     stored_data[CHROME_SYNC_KEY]['ext_status'] = status;
     chrome.storage.sync.set(stored_data, function() {
         loadStatus(status);
+    });
+}
+
+function switchCodeType() {
+    var code_type = CODE_TYPE_OFFENSIVE;
+    if ($('#code-type').html() == 'OFFENSIVE') {
+        code_type = CODE_TYPE_DEFENSIVE;
+    }
+    if (local_stored_data[CHROME_LOCAL_KEY] == undefined) {
+        local_stored_data[CHROME_LOCAL_KEY] = {};
+    }
+    local_stored_data[CHROME_LOCAL_KEY]['code_type'] = code_type;
+    chrome.storage.local.set(local_stored_data, function() {
+        loadCodeType(code_type);
     });
 }
