@@ -3,6 +3,8 @@
     <title id="title"></title>
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/option.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootbox.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head><body>
 <div class="container">
@@ -14,11 +16,16 @@
     <div class="row">
         <h3 class="text-primary">Chose version: </h3>
         <div class="col-sm-6 col-lg-4">
-            <select class="form-control">
-                <option value="1">Default</option>
-                <option value="2" disabled>Box Anh Em</option>
-                <option value="0" disabled>Custom</option>
+            <select class="form-control" id="data-select">
+                <option value="default">Default</option>
+                <option value="custom">Custom</option>
             </select>
+        </div>
+    </div>
+    <br>
+    <div class="row" id="url-input-div" hidden>
+        <div class="col-sm-12 col-lg-6">
+            <input class="form-control" id="data-url" placeholder="Enter Your Emoticons Data URL here!">
         </div>
     </div>
     <br>

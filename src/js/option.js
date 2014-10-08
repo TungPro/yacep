@@ -5,9 +5,6 @@ var CHROME_SYNC_KEY = "YACEP_CHROME_SYNC_DATA";
 var DEFAULT_DATA_URL = "https://dl.dropboxusercontent.com/s/ik69cu3wnya6i0d/default.json?dl=1";
 var DEFAULT_IMG_HOST = "http://yacep.thangtd.com/";
 
-var DEFAULT_VERSION = 1;
-var BOX_ANH_EM_VERSION = 2;
-
 $(function() {
     if (verifyInfoLocalStorage() && verifyDataLocalStorage()) {
         fillTable();
@@ -27,10 +24,55 @@ $(function() {
     var app_detail = chrome.app.getDetails();
     var version = app_detail.version;
     $('#yacep_version').html(version);
-    $('#btn-load').click(function () {
+    $('#btn-reset').click(function() {
         getData(DEFAULT_DATA_URL, fillTable);
     });
+    $('#btn-load').click(function() {
+        if ($('#data-select').val() == 'default') {
+            getData(DEFAULT_DATA_URL, fillTable);
+        } else {
+            var url = $('#data-url').val();
+            if (!validateUrl(url)) {
+                bootbox.alert("Invalid URL! Make sure your inputted URL is correct, and start with https!");
+            } else {
+                bootbox.dialog({
+                    message: 'The data from <a href="' + url + '">' + url + '</a> may contain undesirable emoticons and we will not be responsible for it' ,
+                    title: "<span class='text-danger'>Your are trying to load data that is not officially supported by YACEP.<br/> Do you want to continue ?</span>",
+                    buttons: {
+                        success: {
+                            label: "OK!",
+                            className: "btn-success",
+                            callback: function() {
+                                getData(url, fillTable);
+                            }
+                        },
+                        danger: {
+                            label: "Cancel!",
+                            className: "btn-danger",
+                            callback: function() {
+
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    $('#data-select').change(function (){
+        var val = $(this).val();
+        if (val == 'default') {
+            $('#url-input-div').hide("slow");
+        } else {
+            $('#url-input-div').show("slow");
+        }
+    });
 });
+
+function validateUrl(url) {
+    var regexp = /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    return regexp.test(url);
+}
 
 function verifyInfoLocalStorage() {
     return localStorage[LOCAL_STORAGE_INFO_KEY] != 'undefined' && !$.isEmptyObject(localStorage[LOCAL_STORAGE_INFO_KEY]);
@@ -48,10 +90,12 @@ function getData(url, callback) {
                 var emo = new EmoStorage(data);
                 emo.syncData(callback);
                 localStorage[LOCAL_STORAGE_DATA_KEY] = JSON.stringify(data.emoticons);
+            } else {
+                bootbox.alert("Invalid data structure!");
             }
         }).fail(function( jqxhr, textStatus, error ) {
             var err = textStatus + ", " + error;
-            console.log( "Request Failed: " + err );
+            bootbox.alert("Request Failed: " + err);
         });
 }
 
@@ -63,6 +107,11 @@ function fillTable() {
     clearTable();
     var info = JSON.parse(localStorage[LOCAL_STORAGE_INFO_KEY]);
     $('#data-version').html(" (Version: " + info.data_name + "_" + info.data_version + " " + info.date_sync+ ")");
+    if (info.data_name != "Default" && info.data_url) {
+        $('#data-select').val('custom');
+        $('#data-url').val(info.data_url);
+        $('#url-input-div').show("slow");
+    }
     var emoticons = JSON.parse(localStorage[LOCAL_STORAGE_DATA_KEY]);
     $.each(emoticons, function(key, emo) {
         row = createTableRow(emo);
